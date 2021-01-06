@@ -8,7 +8,7 @@ parameters:
   Urls: '(Get-ChildItem -Path ./ -Recurse -Include *.md)'
   BranchReplaceRegex: "^(${env:SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI}.*/(?:blob|tree)/)master(/.*)$"
   BranchReplacementName: "${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}"
-  UserAgent: $(UserAgent)
+  UserAgent: ${env:USERAGENT}
 steps:
   - task: PowerShell@2
     displayName: Link verification check
