@@ -18,7 +18,9 @@ param (
   # the substitute branch name or SHA commit
   [string] $branchReplacementName = "",
   # flag to allow checking against azure sdk link guidance. Check link guidance here: https://aka.ms/azsdk/guideline/links
-  [bool] $checkLinkGuidance = $false
+  [bool] $checkLinkGuidance = $false,
+  # UserAgent to be configured for web request. Default to PSUserAgent. 
+  [string] $userAgent = "[Microsoft.PowerShell.Commands.PSUserAgent]::InternetExplorer"
 )
 
 $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress dialog
@@ -162,14 +164,14 @@ function CheckLink ([System.Uri]$linkUri)
       $headRequestSucceeded = $true
       try {
         # Attempt HEAD request first
-        $response = Invoke-WebRequest -Uri $linkUri -Method HEAD
+        $response = Invoke-WebRequest -Uri $linkUri -Method HEAD -UserAgent $userAgent
       }
       catch {
         $headRequestSucceeded = $false
       }
       if (!$headRequestSucceeded) {
         # Attempt a GET request if the HEAD request failed.
-        $response = Invoke-WebRequest -Uri $linkUri -Method GET
+        $response = Invoke-WebRequest -Uri $linkUri -Method GET -UserAgent $userAgent
       }
       $statusCode = $response.StatusCode
       if ($statusCode -ne 200) {
@@ -239,7 +241,7 @@ function GetLinks([System.Uri]$pageUri)
 {
   if ($pageUri.Scheme.StartsWith("http")) {
     try {
-      $response = Invoke-WebRequest -Uri $pageUri
+      $response = Invoke-WebRequest -Uri $pageUri -UserAgent $userAgent
       $content = $response.Content
     }
     catch {
