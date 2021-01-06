@@ -27,6 +27,10 @@ $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress d
 # Regex of the locale keywords.
 $locale = "/en-us/"
 $emptyLinkMessage = "There is at least one empty link in the page. Please replace with absolute link. Check here for more information: https://aka.ms/azsdk/guideline/links"
+if (!$userAgent) {
+  Write-Host "reset the userAgent."
+  $userAgent = ""
+}
 function NormalizeUrl([string]$url){
   if (Test-Path $url) {
     $url = "file://" + (Resolve-Path $url).ToString();
