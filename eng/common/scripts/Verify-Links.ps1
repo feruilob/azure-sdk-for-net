@@ -20,7 +20,7 @@ param (
   # flag to allow checking against azure sdk link guidance. Check link guidance here: https://aka.ms/azsdk/guideline/links
   [bool] $checkLinkGuidance = $false,
   # UserAgent to be configured for web request. Default to PSUserAgent. 
-  [string] $userAgent = "[Microsoft.PowerShell.Commands.PSUserAgent]::InternetExplorer"
+  [string] $userAgent = ""
 )
 
 $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress dialog
