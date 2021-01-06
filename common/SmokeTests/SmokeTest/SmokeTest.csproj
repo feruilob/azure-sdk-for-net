@@ -10,6 +10,9 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Azure.Messaging.EventHubs" VersionOverride="5.3.0-beta.4" /><!-- This override will be removed when v5.3.0 is released for GA -->
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Azure.Core" Version="1.7.0" />
     <PackageReference Include="Azure.Identity" Version="1.4.0-beta.1" />
     <PackageReference Include="Azure.Messaging.EventHubs" Version="5.3.0-beta.4" />
