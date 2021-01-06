@@ -20,7 +20,7 @@ param (
   # flag to allow checking against azure sdk link guidance. Check link guidance here: https://aka.ms/azsdk/guideline/links
   [bool] $checkLinkGuidance = $false,
   # UserAgent to be configured for web request. Default to PSUserAgent. 
-  [string] $userAgent = "Microsoft.PowerShell.Commands.PSUserAgent"
+  [string] $userAgent
 )
 
 $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress dialog
@@ -28,9 +28,7 @@ $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress d
 $locale = "/en-us/"
 $emptyLinkMessage = "There is at least one empty link in the page. Please replace with absolute link. Check here for more information: https://aka.ms/azsdk/guideline/links"
 if (!$userAgent) {
-  Write-Host "before reset the userAgent. $userAgent"
   $userAgent = "Microsoft.PowerShell.Commands.PSUserAgent"
-  Write-Host "reset the userAgent. $userAgent"
 }
 function NormalizeUrl([string]$url){
   if (Test-Path $url) {
@@ -287,8 +285,7 @@ if ($urls) {
     exit 1;
   }  
 }
-# Just for testing
-Write-Host $userAgent
+
 if ($PSVersionTable.PSVersion.Major -lt 6)
 {
   LogWarning "Some web requests will not work in versions of PS earlier then 6. You are running version $($PSVersionTable.PSVersion)."
